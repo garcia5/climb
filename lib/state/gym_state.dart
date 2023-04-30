@@ -11,12 +11,17 @@ class GymState extends ChangeNotifier {
   }
 
   Future<void> updateGym(Gym gym) async {
-    gym.save();
+    await gym.save();
     await getGyms();
   }
 
   Future<void> createGym(String name, String? address) async {
     await Gym.create(name, address);
+    await getGyms();
+  }
+
+  Future<void> deleteGym(Gym gym) async {
+    await gym.delete();
     await getGyms();
   }
 }

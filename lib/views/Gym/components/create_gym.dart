@@ -3,7 +3,9 @@ import 'package:climb/state/gym_state.dart';
 import 'package:provider/provider.dart';
 
 class CreateGym extends StatefulWidget {
-  const CreateGym({super.key});
+  const CreateGym({super.key, this.expanded});
+
+  final bool? expanded;
 
   @override
   State<CreateGym> createState() => _CreateGymState();
@@ -12,6 +14,13 @@ class CreateGym extends StatefulWidget {
 class _CreateGymState extends State<CreateGym> {
   String name = '';
   String? address;
+  late bool expanded;
+
+  @override
+  void initState() {
+    super.initState();
+    expanded = (widget.expanded != null && widget.expanded!);
+  }
 
   final _nameController = TextEditingController();
   final _addressController = TextEditingController();
@@ -21,11 +30,20 @@ class _CreateGymState extends State<CreateGym> {
     address = null;
     _nameController.clear();
     _addressController.clear();
+    expanded = false;
   }
 
   @override
   Widget build(BuildContext context) {
     var gymState = context.watch<GymState>();
+    if (!expanded) {
+      return IconButton(
+        icon: const Icon(Icons.add),
+        onPressed: () {
+          expanded = true;
+        },
+      );
+    }
     return Padding(
       padding: const EdgeInsets.all(40.0),
       child: Center(

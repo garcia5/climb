@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -82,6 +81,12 @@ class Gym {
 
     await db.update(_table, {'name': name, 'address': address},
         where: 'id = ?', whereArgs: [id]);
+  }
+
+  delete() async {
+    final db = await database;
+
+    await db.delete(_table, where: 'id = ?', whereArgs: [id]);
   }
 
   Map<String, dynamic> toMap() {

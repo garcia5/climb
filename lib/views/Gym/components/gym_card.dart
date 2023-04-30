@@ -25,12 +25,9 @@ class _GymCardState extends State<GymCard> {
     return Card(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Column(
-              children: const [Icon(Icons.fitness_center)],
-            ),
+          const Center(
+            child: Icon(Icons.fitness_center),
           ),
           Center(
             child: Column(
@@ -39,6 +36,12 @@ class _GymCardState extends State<GymCard> {
                 Text(gym.address.toString()),
               ],
             ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              gym.delete();
+            },
           ),
         ],
       ),

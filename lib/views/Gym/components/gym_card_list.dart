@@ -1,6 +1,7 @@
 import 'package:climb/models/gym.dart';
 import 'package:climb/state/gym_state.dart';
 import 'package:climb/views/Gym/components/create_gym.dart';
+import 'package:climb/views/Gym/no_gyms.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,7 @@ class _GymListState extends State<GymList> {
     return FutureBuilder<void>(
       future: gymState.getGyms(),
       builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-        if (gymState.gyms.isEmpty) return const CreateGym();
+        if (gymState.gyms.isEmpty) return NoGymsView();
         return Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +41,7 @@ class _GymListState extends State<GymList> {
               ),
             ),
             const SizedBox(height: 10),
-            const CreateGym(),
+            CreateGym(),
           ],
         );
       },
