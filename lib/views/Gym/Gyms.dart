@@ -1,7 +1,9 @@
 import 'package:climb/views/Gym/components/create_gym.dart';
 import 'package:flutter/material.dart';
 import 'package:climb/models/gym.dart';
-import 'package:climb/views/Gym/components/gym_card.dart';
+import 'package:climb/views/Gym/components/gym_card_list.dart';
+import 'package:provider/provider.dart';
+import 'package:climb/state/gym_state.dart';
 
 class GymView extends StatelessWidget {
   const GymView({super.key});
@@ -12,22 +14,19 @@ class GymView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        key: const Key('gyms'),
-        body: FutureBuilder<List<Gym>>(
-            future: Gym.all(),
-            builder: (BuildContext context, AsyncSnapshot<List<Gym>> snapshot) {
-              if (!snapshot.hasData) return const CircularProgressIndicator();
-              if (snapshot.data!.isEmpty) {
-                return CreateGym();
-              }
-              return ListView.builder(
-                itemBuilder: (BuildContext itemCtx, int idx) {
-                  final gym = snapshot.data![idx];
-                  return GymCard(gym: gym);
-                },
-                itemCount: snapshot.data!.length,
-              );
-            }));
+    return ChangeNotifierProvider(
+      create: (context) => GymState(),
+      child: Scaffold(
+          key: const Key('gyms'),
+          body: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              GymList(),
+              SizedBox(height: 10),
+              CreateGym(),
+            ],
+          )),
+    );
   }
 }

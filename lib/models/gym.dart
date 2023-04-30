@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class Gym extends ChangeNotifier {
+class Gym {
   Gym({required this.id, required this.name, required this.address});
 
   final int id;
@@ -82,8 +82,6 @@ class Gym extends ChangeNotifier {
 
     await db.update(_table, {'name': name, 'address': address},
         where: 'id = ?', whereArgs: [id]);
-
-    notifyListeners();
   }
 
   Map<String, dynamic> toMap() {
