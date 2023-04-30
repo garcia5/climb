@@ -77,7 +77,7 @@ class Gym {
     });
   }
 
-  void save() async {
+  save() async {
     final db = await database;
 
     await db.update(_table, {'name': name, 'address': address},

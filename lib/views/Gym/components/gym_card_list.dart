@@ -1,5 +1,6 @@
 import 'package:climb/models/gym.dart';
 import 'package:climb/state/gym_state.dart';
+import 'package:climb/views/Gym/components/create_gym.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,15 +25,23 @@ class _GymListState extends State<GymList> {
     return FutureBuilder<void>(
       future: gymState.getGyms(),
       builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-        if (gymState.gyms.isEmpty) return const CircularProgressIndicator();
-        return Expanded(
-          flex: 3,
-          child: ListView.builder(
-            itemBuilder: (BuildContext itemCtx, int idx) {
-              return GymCard(gym: gymState.gyms[idx]);
-            },
-            itemCount: gymState.gyms.length,
-          ),
+        if (gymState.gyms.isEmpty) return const CreateGym();
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 3,
+              child: ListView.builder(
+                itemBuilder: (BuildContext itemCtx, int idx) {
+                  return GymCard(gym: gymState.gyms[idx]);
+                },
+                itemCount: gymState.gyms.length,
+              ),
+            ),
+            const SizedBox(height: 10),
+            const CreateGym(),
+          ],
         );
       },
     );

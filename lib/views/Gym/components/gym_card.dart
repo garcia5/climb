@@ -7,28 +7,41 @@ class GymCard extends StatefulWidget {
   final Gym gym;
 
   @override
-  State<GymCard> createState() => _GymCardState(gym: gym);
+  State<GymCard> createState() => _GymCardState();
 }
 
 class _GymCardState extends State<GymCard> {
-  _GymCardState({required this.gym});
-
-  Gym gym;
   var isEditMode = false;
+  late Gym gym;
+
+  @override
+  void initState() {
+    super.initState();
+    gym = widget.gym;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Card(
-        child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Center(child: Column(children: const [Icon(Icons.fitness_center)])),
-        Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
             child: Column(
-          children: [Text(gym.name.toString()), Text(gym.address.toString())],
-        )),
-      ],
-    ));
+              children: const [Icon(Icons.fitness_center)],
+            ),
+          ),
+          Center(
+            child: Column(
+              children: [
+                Text(gym.name.toString()),
+                Text(gym.address.toString()),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

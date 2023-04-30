@@ -1,4 +1,3 @@
-import 'package:climb/views/Gym/components/create_gym.dart';
 import 'package:flutter/material.dart';
 import 'package:climb/models/gym.dart';
 import 'package:climb/views/Gym/components/gym_card_list.dart';
@@ -16,17 +15,10 @@ class GymView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => GymState(),
-      child: Scaffold(
-          key: const Key('gyms'),
-          body: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              GymList(),
-              SizedBox(height: 10),
-              CreateGym(),
-            ],
-          )),
+      child: const Scaffold(
+        key: Key('gyms'),
+        body: GymList(),
+      ),
     );
   }
 }

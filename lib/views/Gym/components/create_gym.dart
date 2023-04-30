@@ -40,7 +40,9 @@ class _CreateGymState extends State<CreateGym> {
                     onChanged: (value) => name = value),
               ),
               InputDecorator(
-                decoration: const InputDecoration(label: Text('Gym Address')),
+                decoration: const InputDecoration(
+                  label: Text('Gym Address'),
+                ),
                 child: TextField(
                     controller: _addressController,
                     onChanged: (value) => address = value),
