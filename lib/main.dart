@@ -1,4 +1,4 @@
-import 'package:climb/home/home.dart';
+import 'package:climb/views/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

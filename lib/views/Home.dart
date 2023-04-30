@@ -1,6 +1,9 @@
+import 'package:climb/views/Gym/Gyms.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
   State<Home> createState() => _HomeState();
 }
@@ -10,16 +13,16 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    Widget page;
+    Widget page = const GymView();
     // switch (navIndex) {
     //   case 0:
-    //     page = GeneratorPage();
+    //     page = const GymView();
     //     break;
-    //   case 1:
-    //     page = Placeholder();
-    //     break;
+    //   //   case 1:
+    //   //     page = Placeholder();
+    //   //     break;
     //   default:
-    //     throw UnimplementedError('no widget for $selectedIndex');
+    //     throw UnimplementedError('no widget for $navIndex');
     // }
 
     return Scaffold(
@@ -31,7 +34,7 @@ class _HomeState extends State<Home> {
                 extended: false,
                 destinations: const [
                   NavigationRailDestination(
-                    icon: Icon(Icons.home),
+                    icon: Icon(Icons.fitness_center),
                     label: Text('Gyms'),
                   ),
                   NavigationRailDestination(
@@ -51,20 +54,8 @@ class _HomeState extends State<Home> {
                 },
               ),
             ),
-            Expanded(
-              child: Landing(),
-            )
+            Expanded(child: page),
           ],
         ));
-  }
-}
-
-class Landing extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: Column(
-      children: [],
-    ));
   }
 }
