@@ -41,7 +41,7 @@ class _GymListState extends State<GymList> {
               ),
             ),
             const SizedBox(height: 10),
-            CreateGym(),
+            const CreateGym(),
           ],
         );
       },
