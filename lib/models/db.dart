@@ -1,18 +1,18 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-final Map<String, Database> _nameInstanceMap = {};
+const _dbName = 'my-climbs.db';
+Database? _database;
 
-Future<Database> getDb(String dbName,
+Future<Database> getDb(
     {Future<void> Function(Database, int?)? onCreate, int? version}) async {
-  if (_nameInstanceMap[dbName] != null) return _nameInstanceMap[dbName]!;
-  final db = await _initDb(dbName, version: version, onCreate: onCreate);
-  _nameInstanceMap[dbName] = db;
-  return db;
+  if (_database != null) return _database!;
+  _database = await _initDb(version: version, onCreate: onCreate);
+  return _database!;
 }
 
-Future<Database> _initDb(String dbName,
+Future<Database> _initDb(
     {int? version, Future<void> Function(Database, int?)? onCreate}) async {
-  final path = join(await getDatabasesPath(), dbName);
+  final path = join(await getDatabasesPath(), _dbName);
   return await openDatabase(path, version: version, onCreate: onCreate);
 }

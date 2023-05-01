@@ -11,20 +11,20 @@ class Gym {
   /*
    * DB init
    */
-  static const _dbName = 'gyms.db';
   static const _table = 'gyms';
   static const _version = 1;
 
   static Future<Database> get database async {
-    return await getDb(_dbName, onCreate: _onCreate, version: _version);
+    return await getDb(onCreate: _onCreate, version: _version);
   }
 
   static Future<void> _onCreate(Database db, int? version) async {
     await db.execute('''
         CREATE TABLE $_table (
-        id INTEGER PRIMARY KEY,
+        id INT GENERATED ALWAYS AS IDENTITY,
         name TEXT NOT NULL,
-        address TEXT
+        address TEXT,
+        PRIMARY KEY (id)
         )
       ''');
   }
