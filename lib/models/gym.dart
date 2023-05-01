@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+import 'package:climb/models/db.dart';
 
 class Gym {
   Gym({required this.id, required this.name, required this.address});
@@ -13,17 +13,10 @@ class Gym {
    */
   static const _dbName = 'gyms.db';
   static const _table = 'gyms';
-  static Database? _database;
+  static const _version = 1;
 
   static Future<Database> get database async {
-    if (_database != null) return _database!;
-    _database = await _initDatabase();
-    return _database!;
-  }
-
-  static Future<Database> _initDatabase() async {
-    final path = join(await getDatabasesPath(), _dbName);
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
+    return await getDb(_dbName, onCreate: _onCreate, version: _version);
   }
 
   static Future<void> _onCreate(Database db, int? version) async {
