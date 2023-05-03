@@ -15,16 +15,19 @@ class Gym {
   static const _version = 1;
 
   static Future<Database> get database async {
-    return await getDb(onCreate: _onCreate, version: _version);
+    final db = await getDb(onCreate: _onCreate, version: _version);
+    if (!await doesTableExist(db, _table)) {
+      await _onCreate(db, _version);
+    }
+    return db;
   }
 
   static Future<void> _onCreate(Database db, int? version) async {
     await db.execute('''
         CREATE TABLE $_table (
-        id INT GENERATED ALWAYS AS IDENTITY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         address TEXT,
-        PRIMARY KEY (id)
         )
       ''');
   }

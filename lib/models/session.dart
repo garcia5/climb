@@ -26,12 +26,11 @@ class Session {
   static Future<void> _onCreate(Database db, int? version) async {
     await db.execute('''
         CREATE TABLE $_table (
-        id INT GENERATED ALWAYS AS IDENTITY,
-        gym_id INT NOT NULL,
-        start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        end_time TIMESTAMP,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        gym_id INTEGER,
+        start_time TEXT,
+        end_time TEXT,
         notes TEXT,
-        PRIMARY KEY (id),
         CONSTRAINT fk_gyms
           FOREIGN KEY (gym_id)
             REFERENCES gyms(id)
@@ -40,7 +39,11 @@ class Session {
   }
 
   static Future<Database> get database async {
-    return await getDb(onCreate: _onCreate, version: _version);
+    final db = await getDb(onCreate: _onCreate, version: _version);
+    if (!await doesTableExist(db, _table)) {
+      await _onCreate(db, _version);
+    }
+    return db;
   }
   /*
    * end DB init
@@ -59,7 +62,7 @@ class Session {
 
   @override
   String toString() {
-    return 'Session(id: $id, gymId: $gymId, startTime: ${startTime.toString}, endTime: ${endTime?.toString()}), notes: $notes';
+    return 'Session(id: $id, gymId: $gymId, startTime: ${startTime.toString()}, endTime: ${endTime?.toString()}, notes: $notes';
   }
 
   Future<Gym> get gym async {
@@ -80,8 +83,8 @@ class Session {
     return Session(
       id: entry['id'],
       gymId: entry['gym_id'],
-      startTime: entry['start_time'],
-      endTime: entry['end_time'],
+      startTime: DateTime.parse(entry['start_time']),
+      endTime: DateTime.tryParse(entry['end_time']),
       notes: entry['notes'],
     );
   }
@@ -89,18 +92,21 @@ class Session {
   static Future<List<Session>> list({int? gymId}) async {
     final db = await database;
 
-    final List<Map<String, dynamic>> queryResult = await db.query(
-      _table,
-      where: gymId == null ? null : 'gym_id = ?',
-      whereArgs: [gymId],
-    );
+    final List<Map<String, dynamic>> queryResult = gymId == null
+        ? await db.query(
+            _table,
+          )
+        : await db.query(_table, where: 'gym_id = ?', whereArgs: [gymId]);
 
     return List.generate(queryResult.length, (i) {
+      final endTime = queryResult[i]['end_time'] != null
+          ? DateTime.parse(queryResult[i]['end_time'])
+          : null;
       return Session(
         id: queryResult[i]['id'],
         gymId: queryResult[i]['gym_id'],
-        startTime: queryResult[i]['start_time'],
-        endTime: queryResult[i]['end_time'],
+        startTime: DateTime.parse(queryResult[i]['start_time']),
+        endTime: endTime,
         notes: queryResult[i]['notes'],
       );
     });
