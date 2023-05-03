@@ -1,4 +1,5 @@
 import 'package:climb/views/Gym/Gyms.dart';
+import 'package:climb/views/Session/session.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -14,16 +15,17 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     Widget page = const GymView();
-    // switch (navIndex) {
-    //   case 0:
-    //     page = const GymView();
-    //     break;
-    //   //   case 1:
-    //   //     page = Placeholder();
-    //   //     break;
-    //   default:
-    //     throw UnimplementedError('no widget for $navIndex');
-    // }
+
+    switch (navIndex) {
+      case 0:
+        page = const GymView();
+        break;
+      case 1:
+        page = const SessionView();
+        break;
+      default:
+        throw UnimplementedError('no widget for $navIndex');
+    }
 
     return Scaffold(
         key: const Key('home'),
@@ -41,12 +43,8 @@ class _HomeState extends State<Home> {
                     icon: Icon(Icons.bar_chart),
                     label: Text('Sessions'),
                   ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.favorite),
-                    label: Text('Favorites'),
-                  ),
                 ],
-                selectedIndex: 0,
+                selectedIndex: navIndex,
                 onDestinationSelected: (value) {
                   setState(() {
                     navIndex = value;

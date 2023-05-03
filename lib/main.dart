@@ -1,4 +1,6 @@
+import 'package:climb/models/session.dart';
 import 'package:climb/views/Home.dart';
+import 'package:climb/models/gym.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,4 +27,17 @@ class App extends StatelessWidget {
   }
 }
 
-class AppState extends ChangeNotifier {}
+class AppState extends ChangeNotifier {
+  Gym? currentGym;
+  Session? currentSession;
+
+  void setCurrentGym(Gym gym) {
+    currentGym = gym;
+    notifyListeners();
+  }
+
+  void setActiveSession(Session session) {
+    currentSession = session;
+    notifyListeners();
+  }
+}

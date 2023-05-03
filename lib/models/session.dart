@@ -134,4 +134,9 @@ class Session {
     final db = await database;
     await db.update(_table, toMap(), where: 'id = ?', whereArgs: [id]);
   }
+
+  Future<void> delete() async {
+    final db = await database;
+    await db.delete(_table, where: 'id = ?', whereArgs: [id]);
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:climb/main.dart';
 import 'package:climb/state/gym_state.dart';
 import 'package:climb/views/Gym/components/gym_edit_form.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _GymCardState extends State<GymCard> {
 
   @override
   Widget build(BuildContext context) {
+    final appState = context.watch<AppState>();
     final gymState = context.watch<GymState>();
     final gymDisplayTextTheme = Theme.of(context).textTheme.titleMedium;
 
@@ -33,6 +35,9 @@ class _GymCardState extends State<GymCard> {
         setState(() {
           isEditMode = true;
         });
+      },
+      onTap: () {
+        appState.setCurrentGym(gym);
       },
       child: Card(
         child: Row(
