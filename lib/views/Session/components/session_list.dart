@@ -32,16 +32,16 @@ class _SessionListState extends State<SessionList> {
                 flex: 3,
                 child: ListView.builder(
                   itemBuilder: (BuildContext itemCtx, int idx) {
+                    final session = sessionState.sessions[idx];
                     return Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Card(
                           child: Row(children: [
-                        Text(sessionState.sessions[idx].toString()),
+                        Text(session.toString()),
                         IconButton(
                           icon: const Icon(Icons.delete),
                           onPressed: () {
-                            sessionState
-                                .deleteSession(sessionState.sessions[idx]);
+                            sessionState.deleteSession(session);
                           },
                         )
                       ])),
