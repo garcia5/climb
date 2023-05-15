@@ -35,8 +35,16 @@ class _SessionListState extends State<SessionList> {
                     return Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Card(
-                        child: Text(sessionState.sessions[idx].toString()),
-                      ),
+                          child: Row(children: [
+                        Text(sessionState.sessions[idx].toString()),
+                        IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () {
+                            sessionState
+                                .deleteSession(sessionState.sessions[idx]);
+                          },
+                        )
+                      ])),
                     );
                   },
                   itemCount: sessionState.sessions.length,
