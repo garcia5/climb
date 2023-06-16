@@ -33,18 +33,28 @@ class _SessionListState extends State<SessionList> {
                 child: ListView.builder(
                   itemBuilder: (BuildContext itemCtx, int idx) {
                     final session = sessionState.sessions[idx];
-                    return Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Card(
-                          child: Row(children: [
-                        Text(session.toString()),
-                        IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () {
-                            sessionState.deleteSession(session);
-                          },
-                        )
-                      ])),
+                    return Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Card(
+                            child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                session.toString(),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
+                                sessionState.deleteSession(session);
+                              },
+                            )
+                          ],
+                        )),
+                      ),
                     );
                   },
                   itemCount: sessionState.sessions.length,
