@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:climb/models/db.dart';
+import 'package:climb/models/session.dart';
 
 class Gym {
   Gym({required this.id, required this.name, required this.address});
@@ -83,6 +84,13 @@ class Gym {
     final db = await database;
 
     await db.delete(_table, where: 'id = ?', whereArgs: [id]);
+    final sessions = await Session.list(gymId: id);
+    // clean up related sessions
+    await Future.wait(
+      sessions.map((session) async {
+        await session.delete();
+      }),
+    );
   }
 
   Map<String, dynamic> toMap() {
