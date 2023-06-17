@@ -38,6 +38,7 @@ class _GymCardState extends State<GymCard> {
       },
       onTap: () {
         appState.setCurrentGym(gym);
+        appState.setRouteIndex(1);
       },
       child: Card(
         child: Row(

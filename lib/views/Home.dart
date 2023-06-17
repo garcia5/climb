@@ -1,6 +1,8 @@
+import 'package:climb/main.dart';
 import 'package:climb/views/Gym/Gyms.dart';
-import 'package:climb/views/Session/session.dart';
+import 'package:climb/views/Gym/gym_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -10,50 +12,28 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  var navIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     Widget page = const GymView();
+    final appState = context.watch<AppState>();
 
-    switch (navIndex) {
+    switch (appState.routeIndex) {
       case 0:
         page = const GymView();
         break;
       case 1:
-        page = const SessionView();
+        page = const GymDetail();
         break;
       default:
-        throw UnimplementedError('no widget for $navIndex');
+        throw UnimplementedError('no widget for ${appState.routeIndex}');
     }
 
     return Scaffold(
-        key: const Key('home'),
-        body: Row(
-          children: [
-            SafeArea(
-              child: NavigationRail(
-                extended: false,
-                destinations: const [
-                  NavigationRailDestination(
-                    icon: Icon(Icons.fitness_center),
-                    label: Text('Gyms'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.bar_chart),
-                    label: Text('Sessions'),
-                  ),
-                ],
-                selectedIndex: navIndex,
-                onDestinationSelected: (value) {
-                  setState(() {
-                    navIndex = value;
-                  });
-                },
-              ),
-            ),
-            Expanded(child: page),
-          ],
-        ));
+      key: const Key('home'),
+      body: Padding(
+        padding: const EdgeInsets.all(4),
+        child: page,
+      ),
+    );
   }
 }

@@ -30,6 +30,12 @@ class App extends StatelessWidget {
 class AppState extends ChangeNotifier {
   Gym? currentGym;
   Session? currentSession;
+  int routeIndex = 0;
+
+  void setRouteIndex(int idx) {
+    routeIndex = idx;
+    notifyListeners();
+  }
 
   void setCurrentGym(Gym gym) {
     currentGym = gym;

@@ -42,6 +42,7 @@ class _CreateGymState extends State<CreateGym> {
         onPressed: () {
           expanded = true;
         },
+        tooltip: 'Add a Gym',
       );
     }
     return Padding(

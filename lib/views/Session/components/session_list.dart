@@ -28,33 +28,31 @@ class _SessionListState extends State<SessionList> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (sessionState.sessions.isNotEmpty)
-              Expanded(
+              Flexible(
                 flex: 3,
                 child: ListView.builder(
                   itemBuilder: (BuildContext itemCtx, int idx) {
                     final session = sessionState.sessions[idx];
-                    return Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Card(
-                            child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                session.toString(),
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Card(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              session.toString(),
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () {
-                                sessionState.deleteSession(session);
-                              },
-                            )
-                          ],
-                        )),
-                      ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () {
+                              sessionState.deleteSession(session);
+                            },
+                          )
+                        ],
+                      )),
                     );
                   },
                   itemCount: sessionState.sessions.length,
@@ -62,6 +60,7 @@ class _SessionListState extends State<SessionList> {
               ),
             IconButton(
               icon: const Icon(Icons.add),
+              tooltip: 'Start a new session',
               onPressed: widget.currentGymId != null
                   ? () {
                       print('starting session at gym ${widget.currentGymId}');

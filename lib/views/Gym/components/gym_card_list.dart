@@ -31,7 +31,7 @@ class _GymListState extends State<GymList> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
+            Flexible(
               flex: 3,
               child: ListView.builder(
                 itemBuilder: (BuildContext itemCtx, int idx) {
