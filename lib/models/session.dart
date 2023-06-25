@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:climb/models/db.dart';
 import 'package:climb/models/gym.dart';
+import 'package:climb/models/attempt.dart';
 
 class Session {
   Session({
@@ -67,6 +68,10 @@ class Session {
 
   Future<Gym> get gym async {
     return await Gym.get(gymId);
+  }
+
+  Future<List<Attempt>> get attempts async {
+    return await Attempt.getForSession(id);
   }
 
   static Future<Session> get(int id) async {
